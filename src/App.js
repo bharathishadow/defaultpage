@@ -1,25 +1,54 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from "react"
 import './App.css';
 
-function App() {
+export default function App() {
+  const [version, setVersion] = useState(0);
+  function handleReset() {
+    setVersion(version + 1);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <button onClick={handleReset}>Reset</button>
+      <Form key={version} />
+    </>
   );
 }
 
-export default App;
+function Form() {
+  const [data, setData] = useState({
+    color: "",
+    border: ""
+  });
+
+  function handleChange(event) {
+    setData((prevData) => {
+      return {
+        ...prevData,
+        [event.target.name]: event.target.value
+      };
+    });
+  }
+
+  const sty = {
+    background: data.color,
+    fontSize: `${data.border}px`
+    // fontSize: data ? `${data.border}px` : ""
+  };
+  return (
+    <>
+      <input
+        placeholder="color"
+        name="color"
+        value={data.color}
+        onChange={handleChange}
+      />
+      <input
+        placeholder="color"
+        name="border"
+        value={data.border}
+        onChange={handleChange}
+      />
+      <p style={sty}>Hello</p>
+    </>
+  );
+}
